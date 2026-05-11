@@ -1,0 +1,102 @@
+## 🧩 Cardboard for Pictures — Explanation
+
+For every picture with side length `si`, a cardboard border of width `w` is added on all sides.  
+Therefore, the new side length becomes:
+
+`si + 2*w`
+
+The total cardboard area used for one picture is:
+
+`(si + 2*w)^2`
+
+Since the total cardboard used for all pictures is exactly `c`, we get:
+
+`Σ (si + 2*w)^2 = c`
+
+Our task is to find the value of `w`.
+
+---
+
+### 🔍 Approach
+
+As the value of `w` increases, the total area also increases.  
+This monotonic behavior allows us to apply **Binary Search** on `w`.
+
+For a chosen value of `w`:
+
+- If total area `< c` → we need a larger `w`
+- If total area `> c` → we need a smaller `w`
+- If total area `== c` → answer found
+
+---
+
+### 💡 How was the upper bound for `w` determined?
+
+The problem states:
+
+`c ≤ 10^18`
+
+We know:
+
+`(si + 2*w)^2 ≤ c`
+
+Ignoring `si` for estimation:
+
+`(2*w)^2 ≤ 10^18`
+
+`4*w^2 ≤ 10^18`
+
+`w^2 ≤ 2.5 × 10^17`
+
+`w ≤ 5 × 10^8`
+
+So the answer for `w` can never exceed roughly `5e8`.
+
+That is why using:
+
+```java
+long high = (long)1e9;
+```
+
+is completely safe for Binary Search and much better than using `Long.MAX_VALUE`.
+
+---
+
+### ⚠️ Overflow Handling
+
+The value of:
+
+`(si + 2*w)^2`
+
+can become very large and may exceed the range of `long`.
+
+To safely handle multiplication overflow:
+
+```java
+if(val > Long.MAX_VALUE / val)
+```
+
+This check tells us whether `val * val` will overflow before performing multiplication.
+
+While adding areas to the total sum, addition overflow is also possible.  
+So before adding:
+
+```java
+sum += sq;
+```
+
+we safely check:
+
+```java
+if(sum > c - sq)
+```
+
+This prevents both:
+- exceeding `c`
+- overflow during addition
+
+---
+
+### ⏱ Time Complexity
+
+`O(n log 1e9)`
