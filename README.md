@@ -39,9 +39,8 @@ The main focus is on writing:
 
 - Binary Search
 - Greedy
+- BruteForce
 - Dynamic Programming
-- Graphs
-- Trees
 - Math
 - Strings
 
