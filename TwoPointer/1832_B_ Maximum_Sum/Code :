@@ -1,0 +1,42 @@
+import java.util.Arrays;
+import java.util.Scanner;
+
+public class tle {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int t = sc.nextInt();
+        while (t-- > 0) {
+            int n = sc.nextInt();
+            int k = sc.nextInt();
+            int[] arr = new int[n];
+            long sum = 0;
+            for (int i = 0; i < n; i++) {
+                arr[i] = sc.nextInt();
+                sum += arr[i];
+            }
+            Arrays.sort(arr);
+            int i=0,j=n-1;
+            long j_sum=0;
+            for(j=n-k;j<n;j++){
+                j_sum+=arr[j];
+            }
+            long i_sum=0;
+            j=n-k;
+            long max=0;
+            while(k+1>0){
+                long tem=sum-(i_sum+j_sum);
+                max=Math.max(max,tem);
+                k--;
+               if(i+1<n) i_sum+=arr[i]+arr[i+1];
+               else break;
+               i+=2;
+               if(j<n){
+                   j_sum-=arr[j];
+                   j++;
+               }else
+                   j_sum=0;
+            }
+            System.out.println(max);
+        }
+    }
+}
