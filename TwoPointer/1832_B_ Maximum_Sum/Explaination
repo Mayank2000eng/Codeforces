@@ -1,0 +1,41 @@
+Problem
+
+You have an array and can perform exactly k operations.
+
+In one operation, you can either:
+
+Remove 2 smallest elements
+OR
+Remove 1 largest element
+
+You need to maximize the sum of remaining elements.
+
+Key Observation
+
+Suppose:
+
+We remove 2 smallest elements exactly x times.
+Then remaining operations:
+k−x
+
+must be used for removing largest elements.
+
+So if we choose some value of x:
+
+Removed elements are:
+
+From left side (smallest):
+2x
+
+elements
+
+From right side (largest):
+k−x
+
+elements
+
+Therefore, we simply try all possible values:
+
+x = 0,1,2,...,k
+
+and compute the best answer.
